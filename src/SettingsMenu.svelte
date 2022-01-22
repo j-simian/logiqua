@@ -1,6 +1,53 @@
 <script lang="ts">
-	import type { Colour, Settings } from "./Types";
+	import type { Colour, Settings, ColourSettings } from "./Types";
 	export var settings: Settings;
+
+	const easyColourPreset: ColourSettings = {
+		difficultyPreset: "easy",
+		gameMode: "infinite",
+		colours: [
+			{ name: "black", hex: "000000", enabled: true },
+			{ name: "red", hex: "ff0022", enabled: true },
+			{ name: "orange", hex: "ff8800", enabled: false },
+			{ name: "yellow", hex: "ffdd00", enabled: false },
+			{ name: "green", hex: "00dd44", enabled: false },
+			{ name: "blue", hex: "0088ff", enabled: true },
+			{ name: "purple", hex: "8800ff", enabled: false },
+		],
+		gameLength: 30
+	}
+
+	const mediumColourPreset: ColourSettings = {
+		difficultyPreset: "medium",
+		gameMode: "timed",
+		colours: [
+			{ name: "black", hex: "000000", enabled: true },
+			{ name: "red", hex: "ff0022", enabled: true },
+			{ name: "orange", hex: "ff8800", enabled: false },
+			{ name: "yellow", hex: "ffdd00", enabled: true },
+			{ name: "green", hex: "00dd44", enabled: true },
+			{ name: "blue", hex: "0088ff", enabled: true },
+			{ name: "purple", hex: "8800ff", enabled: false },
+		],
+		gameLength: 30
+	}
+
+	const hardColourPreset: ColourSettings = {
+		difficultyPreset: "hard",
+		gameMode: "instant death",
+		colours: [
+			{ name: "black", hex: "000000", enabled: true },
+			{ name: "red", hex: "ff0022", enabled: true },
+			{ name: "orange", hex: "ff8800", enabled: true },
+			{ name: "yellow", hex: "ffdd00", enabled: true },
+			{ name: "green", hex: "00dd44", enabled: true },
+			{ name: "blue", hex: "0088ff", enabled: true },
+			{ name: "purple", hex: "8800ff", enabled: true },
+		],
+		gameLength: 30
+	}
+	
+	settings.colourGameSettings = mediumColourPreset;
 
 	var listeningForKeybind: string = "";
 	function setKeybind(control: string) {
@@ -17,43 +64,17 @@
 	function setDifficultyPreset() {
 		switch(settings.colourGameSettings.difficultyPreset) {
 			case "easy":
-				settings.colourGameSettings.colours = [
-					{ name: "black", hex: "000000", enabled: true } as Colour,
-					{ name: "red", hex: "ff0022", enabled: true } as Colour,
-					{ name: "orange", hex: "ff8800", enabled: false } as Colour,
-					{ name: "yellow", hex: "ffdd00", enabled: false } as Colour,
-					{ name: "green", hex: "00dd44", enabled: false } as Colour,
-					{ name: "blue", hex: "0088ff", enabled: true } as Colour,
-					{ name: "purple", hex: "8800ff", enabled: false } as Colour,
-				];
-				settings.colourGameSettings.gameMode = "infinite";
+				settings.colourGameSettings = easyColourPreset;
 				break;
 			case "medium":
-				settings.colourGameSettings.colours = [
-					{ name: "black", hex: "000000", enabled: true } as Colour,
-					{ name: "red", hex: "ff0022", enabled: true } as Colour,
-					{ name: "orange", hex: "ff8800", enabled: false } as Colour,
-					{ name: "yellow", hex: "ffdd00", enabled: true } as Colour,
-					{ name: "green", hex: "00dd44", enabled: true } as Colour,
-					{ name: "blue", hex: "0088ff", enabled: true } as Colour,
-					{ name: "purple", hex: "8800ff", enabled: false } as Colour,
-				];
-				settings.colourGameSettings.gameMode = "timed";
+				settings.colourGameSettings = mediumColourPreset;
 				break;
 			case "hard":
-				settings.colourGameSettings.colours = [
-					{ name: "black", hex: "000000", enabled: true } as Colour,
-					{ name: "red", hex: "ff0022", enabled: true } as Colour,
-					{ name: "orange", hex: "ff8800", enabled: true } as Colour,
-					{ name: "yellow", hex: "ffdd00", enabled: true } as Colour,
-					{ name: "green", hex: "00dd44", enabled: true } as Colour,
-					{ name: "blue", hex: "0088ff", enabled: true } as Colour,
-					{ name: "purple", hex: "8800ff", enabled: true } as Colour,
-				];
-				settings.colourGameSettings.gameMode = "instant death";
+				settings.colourGameSettings = hardColourPreset;
 				break;
 		}
 	}
+
 </script>
 
 <svelte:window on:keydown={keyListener} />

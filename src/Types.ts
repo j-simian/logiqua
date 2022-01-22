@@ -1,14 +1,15 @@
 export type Settings = {
 	language: Language,
-	colourGameSettings: { 
+	colourGameSettings: ColourSettings,
+	keybinds: Keybinds[];
+};
+export type Keybinds = { [control: string]: string; };
+export type ColourSettings = { 
 		difficultyPreset: gameDifficulty,
 		gameMode: colourGameModes,
 		colours: Colour[];
 		gameLength: number;
-	},
-	keybinds: Keybinds[]
-};
-export type Keybinds = { [control: string]: string }
+}
 type Language = "en_uk" | "fr";
 type gameDifficulty = "easy" | "medium" | "hard" | "custom";
 type colourGameModes = "infinite" | "timed" | "instant death";
