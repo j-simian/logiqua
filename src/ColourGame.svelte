@@ -152,21 +152,40 @@
 
 	<div class="containerGame">
 		{#if state=="start"}
-			<div class="boxLine">
-				<div class="box begin">Press space to begin, or S for settings.</div>
+			<div class="box begin">Press <code class="keybind">{affirmativeKey}</code> to begin, or <code class="keybind">S</code> for settings.</div>
+			<div class="tutorial">
+				<div class="box boxHeader boxCentered">
+					how to play
+				</div>	
+				<div class="boxLine">
+					<div class="box boxInfo boxCentered">
+						<span class="infoLine">
+							press <code class="keybind">{affirmativeKey}</code> if the <i>meaning</i> of the top word matches with the <i>colour</i> of the bottom word.
+							if they don't match, press <code class="keybind">{negativeKey}</code>.
+						</span>
+						<span class="infoLine">
+							you will need to try and ignore the meaning of the bottom word and the colour of the top word.
+						</span>
+						<span class="infoLine">
+							this can be quite difficult to get used to ! 
+						</span>
+					</div>	
+				</div>
 			</div>
 		{:else if state=="playing"}
 			<div class="boxLine">
 				<div class="delta box">{gameTimer}s</div>
 				<div class="score box">Score: {score}</div>
 			</div>
-			<div class="boxLine">
-				<div class="pointer">meaning</div>
-				<div class="boxFirst wordBox box" style={"color: #" + topColour.hex}>{topWord.name}</div>
-			</div>
-			<div class="boxLine">
-				<div class="pointer">colour</div>
-				<div class="boxSecond wordBox box" style={"color: #" + bottomColour.hex}>{bottomWord.name}</div>
+			<div class="gameBoxes">
+				<div class="boxLine">
+					<div class="pointer">meaning</div>
+					<div class="boxFirst wordBox box" style={"color: #" + topColour.hex}>{topWord.name}</div>
+				</div>
+				<div class="boxLine">
+					<div class="pointer">colour</div>
+					<div class="boxSecond wordBox box" style={"color: #" + bottomColour.hex}>{bottomWord.name}</div>
+				</div>
 			</div>
 			{#if correct}
 				<div class="tick symbol">✅</div>
@@ -190,9 +209,42 @@
 <style>
 	.begin {
 		color: black;
-		text-align: center;
 		width: 100%;
 		font-size: 2em;
+	}
+
+	.boxCentered {
+		width: max-content;
+		margin: auto;
+	}
+
+	.boxHeader {
+		font-size: 2em;
+		font-weight: 900;
+		color: black;
+		margin-bottom: 0.5em;
+	}
+
+	.boxInfo {
+		font-size: 1.5em;
+	}
+
+	.infoLine {
+		display: block;
+		margin: 0.3em;
+	}
+
+	.keybind {
+		padding: 5px;
+		border: 1px hsl(0, 0%, 50%) solid;
+		border-radius: 0.3em;
+		background-color: hsla(0, 0%, 0%, 10%);
+	}
+
+	.tutorial {
+		position: relative;
+		top: 50%;
+		transform: translateY(-75%);
 	}
 
 	.containerGame {
@@ -203,7 +255,9 @@
 		left:0;
 		right:0;
 		margin: auto;
-		padding: 12.5%;
+		padding-left: 12.5%;
+		padding-right: 12.5%;
+		padding-top: 2.5%;
 		background-color: hsl(0, 0%, 20%);
 		border: 1px solid hsl(0, 0%, 50%);
 		border-radius: 2em;
@@ -212,10 +266,16 @@
 
 	.boxLine {
 		display: flex;
-		align-items: center;
 		width: 100%;
 		margin: auto;
 		padding: 0;
+	}
+
+	.gameBoxes {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+		margin: auto;
 	}
 
 	.pointer {
@@ -268,16 +328,10 @@
 		font-size: 3.5em;
 	}
 
-	.tick {
-		color: green;
-	}
-
-	.cross {
-		color: red;
-	}
-
 	.symbol {
 		margin: auto;
+		position: relative;
+		top: 3em;
 		font-size: 4em;
 	}
 </style>

@@ -47,8 +47,6 @@
 		gameLength: 30
 	}
 	
-	settings.colourGameSettings = mediumColourPreset;
-
 	var listeningForKeybind: string = "";
 	function setKeybind(control: string) {
 		listeningForKeybind = control;
@@ -143,6 +141,10 @@
 		font-size: 2.5em;
 		font-weight: 900;
 		margin-bottom: 0.5em;
+	}
+
+	.keybindSelector {
+		font-family: monospace;
 	}
 
 	.settingsLine {

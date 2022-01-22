@@ -6,14 +6,14 @@
 	var settings: Settings = {
 		language: "en_uk",
 		colourGameSettings: {
-			difficultyPreset: "easy",
-			gameMode: "infinite",
+			difficultyPreset: "medium",
+			gameMode: "timed",
 			colours: [
 				{ name: "black", hex: "000000", enabled: true } as Colour,
 				{ name: "red", hex: "ff0022", enabled: true } as Colour,
 				{ name: "orange", hex: "ff8800", enabled: false } as Colour,
-				{ name: "yellow", hex: "ffdd00", enabled: false } as Colour,
-				{ name: "green", hex: "00dd44", enabled: false } as Colour,
+				{ name: "yellow", hex: "ffdd00", enabled: true } as Colour,
+				{ name: "green", hex: "00dd44", enabled: true } as Colour,
 				{ name: "blue", hex: "0088ff", enabled: true } as Colour,
 				{ name: "purple", hex: "8800ff", enabled: false } as Colour,
 			],
@@ -51,10 +51,6 @@
 	</div>
 	{#if settingsVisible}
 		<SettingsMenu bind:settings={settings}/>
-		<div class="hideContent">
-			<!-- <div class="gameHeader">{currentGame.name}</div> -->
-			<!-- <ColourGame settings={settings}/> -->
-		</div>
 	{:else}
 		<div class="gameHeader">{currentGame.name}</div>
 		<ColourGame settings={settings}/>
@@ -69,24 +65,6 @@
 		background-color: hsl(0, 0%, 7%);
 		height: 100vh;
 		overflow: hidden;
-	}
-
-	.hideContent {
-		position: absolute;
-		top: 0px;
-	}
-
-	.hideContent:after {
-		content: " ";
-		z-index: 10;
-		display: block;
-		position: absolute;
-		height: 100%;
-		width: 100%;
-		top: 0;
-		left: 0;
-		right: 0;
-		background: rgba(0, 0, 0, 0.8);
 	}
 
 	.banner {
