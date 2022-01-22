@@ -13,6 +13,47 @@
 		listeningForKeybind = "";
 		console.log(settings.keybinds);
 	}
+
+	function setDifficultyPreset() {
+		switch(settings.colourGameSettings.difficultyPreset) {
+			case "easy":
+				settings.colourGameSettings.colours = [
+					{ name: "black", hex: "000000", enabled: true } as Colour,
+					{ name: "red", hex: "ff0022", enabled: true } as Colour,
+					{ name: "orange", hex: "ff8800", enabled: false } as Colour,
+					{ name: "yellow", hex: "ffdd00", enabled: false } as Colour,
+					{ name: "green", hex: "00dd44", enabled: false } as Colour,
+					{ name: "blue", hex: "0088ff", enabled: true } as Colour,
+					{ name: "purple", hex: "8800ff", enabled: false } as Colour,
+				];
+				settings.colourGameSettings.gameMode = "infinite";
+				break;
+			case "medium":
+				settings.colourGameSettings.colours = [
+					{ name: "black", hex: "000000", enabled: true } as Colour,
+					{ name: "red", hex: "ff0022", enabled: true } as Colour,
+					{ name: "orange", hex: "ff8800", enabled: false } as Colour,
+					{ name: "yellow", hex: "ffdd00", enabled: true } as Colour,
+					{ name: "green", hex: "00dd44", enabled: true } as Colour,
+					{ name: "blue", hex: "0088ff", enabled: true } as Colour,
+					{ name: "purple", hex: "8800ff", enabled: false } as Colour,
+				];
+				settings.colourGameSettings.gameMode = "timed";
+				break;
+			case "hard":
+				settings.colourGameSettings.colours = [
+					{ name: "black", hex: "000000", enabled: true } as Colour,
+					{ name: "red", hex: "ff0022", enabled: true } as Colour,
+					{ name: "orange", hex: "ff8800", enabled: true } as Colour,
+					{ name: "yellow", hex: "ffdd00", enabled: true } as Colour,
+					{ name: "green", hex: "00dd44", enabled: true } as Colour,
+					{ name: "blue", hex: "0088ff", enabled: true } as Colour,
+					{ name: "purple", hex: "8800ff", enabled: true } as Colour,
+				];
+				settings.colourGameSettings.gameMode = "instant death";
+				break;
+		}
+	}
 </script>
 
 <svelte:window on:keydown={keyListener} />
@@ -29,7 +70,7 @@
 	<div class="settingsHeader">game settings</div>
 	<div class="settingsLine">
 		<label class="settingsLabel" for="difficulty">difficulty presets</label>
-		<select name="difficulty" id="difficulty" bind:value={settings.colourGameSettings.difficultyPreset}>
+		<select name="difficulty" id="difficulty" bind:value={settings.colourGameSettings.difficultyPreset} on:change={setDifficultyPreset}>
 			<option value="easy">easy</option>
 			<option value="medium">medium</option>
 			<option value="hard">hard</option>
@@ -40,7 +81,7 @@
 		<select name="gamemode" id="gamemode" bind:value={settings.colourGameSettings.gameMode}>
 			<option value="infinite">infinite</option>
 			<option value="timed">timed</option>
-			<option value="instant">instant death</option>
+			<option value="instant death">instant death</option>
 		</select>
 	</div>
 	<div class="settingsLine keybindsLine">
@@ -54,8 +95,8 @@
 	</div>
 	{#each settings.colourGameSettings.colours as colour, i}
 		<div class="settingsLine">
-			<label for="black" class="settingsLabel checkboxLabel">{colour.name}</label>
-			<input type="checkbox" name="black" id="black" bind:checked={colour.enabled} />
+			<label for={colour.name} class="settingsLabel checkboxLabel">{colour.name}</label>
+			<input type="checkbox" name={colour.name} id={"cbox"+colour.name} bind:checked={colour.enabled} />
 		</div>
 	{/each}
 	<div class="settingsLine">

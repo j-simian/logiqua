@@ -29,36 +29,51 @@
 	var gameTimerInterval;
 
 	function startGame() {
-		gameTimer = gameLength;
-		gameTimerInterval = setInterval(decrementTimer, 1000);
+		if(settings.colourGameSettings.gameMode == "timed") {
+			gameTimer = gameLength;
+			gameTimerInterval = setInterval(decrementTimer, 1000);
+		} else {
+			gameTimer = 0;
+			gameTimerInterval = setInterval(incrementTimer, 1000);
+		}
 		score = 0;
 		time = performance.now();
 		setBoxes();
 		state = "playing";
 	}
 
+	function decrementTimer() {
+		if(gameTimer == 0) {
+			endGame();
+			return;
+		}
+		gameTimer--;
+	}
+
+	function incrementTimer() {
+		gameTimer++;
+	}
+
 	function endGame() {
 		if(state == "gameover") {
 			return;
 		}
-		state = "gameover";
 		clearInterval(gameTimerInterval);
+		state = "gameover";
 	}
 
 	function setBoxes() {
-		let matching = Math.random() >= 0.5;
-
-		
+		let matching = Math.random() >= 0.5; // 50/50 chance of answer being yes or no.
 
 		topWord = colours[Math.floor(Math.random() * colours.length)];
 		topColour = colours[Math.floor(Math.random() * colours.length)];
 		bottomWord = colours[Math.floor(Math.random() * colours.length)];
-
 		bottomColour = topWord;
 		if(!matching){
-			bottomColour = colours[Math.floor(Math.random() * colours.length)];
+			while(bottomColour == topWord) {
+				bottomColour = colours[Math.floor(Math.random() * colours.length)];
+			}
 		}
-		
 	}
 
 	function keyUpListener(e: KeyboardEvent) {
@@ -94,44 +109,41 @@
 		time = performance.now();
 		if(answer) {
 			if(topWord == bottomColour) {	
-				score++;
-				right++;
-				correct = true;
-				incorrect = false;
-				setTimeout(() => {correct = false;}, UI_TIMEOUT);
+				correctAnswer();
 			} else {
-				score--;
-				wrong++;
-				incorrect = true;
-				correct = false;
-				setTimeout(() => {incorrect = false;}, UI_TIMEOUT);
+				incorrectAnswer();
 			}
 			setBoxes();
 		} else {
 			if(topWord != bottomColour) {
-				score++;
-				right++;
-				correct = true;
-				incorrect = false;
-				setTimeout(() => {correct = false;}, UI_TIMEOUT);
+				correctAnswer();
 			} else {
-				score--;
-				wrong++;
-				incorrect = true;
-				correct = false;
-				setTimeout(() => {incorrect = false;}, UI_TIMEOUT);
+				incorrectAnswer();
 			}
 			setBoxes();
 		}
 	}
 
-	function decrementTimer() {
-		if(gameTimer == 0) {
-			endGame();
-			return;
-		}
-		gameTimer--;
+	function correctAnswer() {
+		score++;
+		right++;
+		correct = true;
+		incorrect = false;
+		setTimeout(() => {correct = false;}, UI_TIMEOUT);
 	}
+
+	function incorrectAnswer() {
+		score--;
+		wrong++;
+		incorrect = true;
+		correct = false;
+		if(settings.colourGameSettings.gameMode == "instant death") {
+			endGame();
+		}
+		setTimeout(() => {incorrect = false;}, UI_TIMEOUT);
+	}
+
+
 
 
 </script>
@@ -146,7 +158,7 @@
 		{:else if state=="playing"}
 			<div class="boxLine">
 				<div class="delta box">{gameTimer}s</div>
-				<div class="score box">{score}</div>
+				<div class="score box">Score: {score}</div>
 			</div>
 			<div class="boxLine">
 				<div class="pointer">meaning</div>
