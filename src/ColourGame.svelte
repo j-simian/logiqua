@@ -4,7 +4,7 @@
 
 	var colours = settings.colourGameSettings.colours.filter((c: Colour) => (c.enabled));
 
-	var state: State = "gameover";
+	var state: State = "start";
 
 	var topWord: Colour, bottomWord: Colour;
 	var topColour: Colour, bottomColour: Colour; 
