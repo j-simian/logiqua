@@ -11,11 +11,11 @@
 			colours: [
 				{ name: "black", hex: "000000", enabled: true } as Colour,
 				{ name: "red", hex: "ff0022", enabled: true } as Colour,
-				{ name: "orange", hex: "ff8800", enabled: false } as Colour,
+				{ name: "orange", hex: "ff8800", enabled: true } as Colour,
 				{ name: "yellow", hex: "ffdd00", enabled: true } as Colour,
 				{ name: "green", hex: "00dd44", enabled: true } as Colour,
 				{ name: "blue", hex: "0088ff", enabled: true } as Colour,
-				{ name: "purple", hex: "8800ff", enabled: false } as Colour,
+				{ name: "purple", hex: "8800ff", enabled: true } as Colour,
 			],
 			gameLength: 30
 		},
@@ -23,7 +23,7 @@
 			{ ["colourGame_affirmative"]: "Space",
 			  ["colourGame_negative"]: "ShiftLeft" } as Keybinds,
 		]
-};
+	};
 
 	type Game = { name: string }; 
 	var currentGame: Game = { name: "colour match" };

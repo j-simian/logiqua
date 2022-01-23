@@ -4,7 +4,7 @@
 
 	var colours = settings.colourGameSettings.colours.filter((c: Colour) => (c.enabled));
 
-	var state: State = "start";
+	var state: State = "gameover";
 
 	var topWord: Colour, bottomWord: Colour;
 	var topColour: Colour, bottomColour: Colour; 
@@ -75,6 +75,11 @@
 			}
 		}
 	}
+	function resetGame() {
+		state = "start";
+		clearInterval(gameTimerInterval);
+		gameTimer = 0;
+	}
 
 	function keyUpListener(e: KeyboardEvent) {
 		switch(e.code) {
@@ -82,7 +87,7 @@
 				if(state == "start") startGame();
 				break;
 			case "KeyR":
-				state = "start";
+				resetGame();
 				break;
 		}
 		if(e.code == "Space" && state=="start") {
@@ -194,13 +199,14 @@
 			{/if}
 		{:else if state=="gameover"}
 			<div class="boxLine">
-				<div class="box begin">Stats</div>
+				<div class="box begin">press <code class="keybind">R</code> to restart.</div>
 			</div>
-			<div class="boxLine">
-				<div class="box begin">Answered correctly: {right}, incorrectly: {wrong}</div>
-			</div>
-			<div class="boxLine">
-				<div class="box begin">Average time per response: {(deltas.reduce((a, b)=>a+b, 0)/deltas.length).toFixed(3)}s</div>
+			<div class="stats">
+				<div class="boxLine">
+					<div class="box boxCentered boxHeader">stats</div>
+				</div>
+				<div class="box boxInfo boxCentered">Answered correctly: <code class="keybind">{right}</code>, incorrectly: <code class="keybind">{wrong}</code></div>
+				<div class="box boxInfo boxCentered">Average time per response: {(deltas.reduce((a, b)=>a+b, 0)/deltas.length).toFixed(3)}s</div>
 			</div>
 		{/if}
 
@@ -227,6 +233,7 @@
 
 	.boxInfo {
 		font-size: 1.5em;
+		margin-bottom: 0.5em;
 	}
 
 	.infoLine {
@@ -247,6 +254,10 @@
 		transform: translateY(-75%);
 	}
 
+	.stats {
+		position: relative;
+		top: 25%;
+	}
 	.containerGame {
 		position: absolute;
 		width: 50%;
@@ -257,7 +268,7 @@
 		margin: auto;
 		padding-left: 12.5%;
 		padding-right: 12.5%;
-		padding-top: 2.5%;
+		padding-top: 3%;
 		background-color: hsl(0, 0%, 20%);
 		border: 1px solid hsl(0, 0%, 50%);
 		border-radius: 2em;
