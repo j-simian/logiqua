@@ -293,14 +293,15 @@
 	.boxLine {
 		display: flex;
 		width: 100%;
-		margin: auto;
-		padding: 0;
+		margin-left: auto;
+		margin-right: auto;
 	}
 
 	.gameBoxes {
 		position: relative;
-		top: 50%;
-		transform: translateY(-50%);
+		width: 100%;
+		/* top: 50%; */
+		/* transform: translateY(-50%); */
 		margin: auto;
 	}
 
@@ -348,7 +349,7 @@
 	.wordBox {
 		display: inline;
 		position: relative;
-		flex-grow: 1;
+		flex-grow: 5;
 		margin-bottom: 2.5%;
 		font-weight: 900;
 		font-size: 3.5em;
@@ -356,9 +357,9 @@
 
 
 	.symbol {
-		margin: auto;
-		position: relative;
-		top: 3em;
+		position: fixed;
+		bottom: 2em;
+		left: 50%;
 		font-size: 4em;
 	}
 </style>
