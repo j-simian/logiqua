@@ -22,11 +22,20 @@
 	var time: number;
 	var deltas: number[] = [];
 
-
+	
 	//Timer variableslic_
 	$: gameLength = settings.colourGameSettings.gameLength;
 	var gameTimer;
 	var gameTimerInterval;
+
+	let htpDiv: HTMLDivElement;
+	function hideElems() {
+		if(htpDiv.clientWidth < htpDiv.scrollWidth || htpDiv.clientHeight < htpDiv.scrollHeight) {
+			htpDiv.style.display = "none";
+		} else {
+			htpDiv.style.display = "block";
+		}
+	}
 
 	function startGame() {
 		if(settings.colourGameSettings.gameMode == "timed") {
@@ -153,16 +162,16 @@
 
 </script>
 
-<svelte:window on:keydown={keyDownListener} on:keyup={keyUpListener} />
+<svelte:window on:load={hideElems} on:resize={hideElems} on:keydown={keyDownListener} on:keyup={keyUpListener} />
 
 	<div class="containerGame">
 		{#if state=="start"}
 			<div class="box begin">Press <code class="keybind">{affirmativeKey}</code> to begin, or <code class="keybind">S</code> for settings.</div>
-			<div class="tutorial">
+			<div class="tutorial" bind:this={htpDiv} >
 				<div class="box boxHeader boxCentered">
 					how to play
 				</div>	
-				<div class="boxLine">
+				<div class="boxLine tutorialText">
 					<div class="box boxInfo boxCentered">
 						<span class="infoLine">
 							press <code class="keybind">{affirmativeKey}</code> if the <i>meaning</i> of the top word matches with the <i>colour</i> of the bottom word.
@@ -250,16 +259,22 @@
 
 	.tutorial {
 		position: relative;
-		top: 50%;
-		transform: translateY(-75%);
+		margin-top: 2em;
+		height: 100%;
+		flex-flow: column wrap;
+		overflow: hidden;
 	}
 
 	.stats {
 		position: relative;
 		top: 25%;
 	}
+
+
 	.containerGame {
 		position: absolute;
+		display: flex;
+		flex-direction: column;
 		width: 50%;
 		top: calc(10.8em + 4vh);
 		bottom: 7.5%;
@@ -338,6 +353,7 @@
 		font-weight: 900;
 		font-size: 3.5em;
 	}
+
 
 	.symbol {
 		margin: auto;

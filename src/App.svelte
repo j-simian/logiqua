@@ -81,13 +81,12 @@
 	}
 
 	.gameHeader {
-		width: max-content;
+		max-width: 10em; 
+		width: calc(100% - 50px);
 		margin: auto;
 		margin-top: 0.5em;
 		margin-bottom: 0.5em;
 		padding: 0.2em;
-		padding-left: 2em;
-		padding-right: 2em;
 		background-color: hsl(0, 0%, 20%);
 		border: 1px solid hsl(0, 0%, 50%);
 		border-radius: 2em;
